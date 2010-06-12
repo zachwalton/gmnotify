@@ -1,0 +1,41 @@
+--------------------------------
+
+GMNotify: A notification script for Irssi.  When away, sends an email on channel highlights/PMs.  Supports responding.
+Version: 1.0
+Author: Zach Walton
+
+Parts of this script are modified from sumeet's goobtown.pl and drano's notify.io script.
+
+--------------------------------
+
+USAGE INSTRUCTIONS:
+
+It is NOT OPTIONAL to set some of the below values.  If you're having issues running the script, make sure that the content of the below variables is correct.
+
+--Irssi Environment Variables:
+	gmnotify_poll_rate: 		How often to poll for new emails in seconds.
+					Default: 300 seconds.  Setting this too low can cause freezing/crashing!
+	gmnotify_active_poll_rate:	When an email is sent or received, gmnotify_poll_rate
+					temporarily changes to this value.  Again, don't set this too low.
+	gmnotify_source:		Gmail address to send from (blank by default!)
+	gmnotify_password:		Password for address in gmail_notify_source (blank by default!)
+	gmnotify_dest:			Gmail address to send to (blank by default!)
+	gmnotify_folder:		The IMAP folder to poll for response emails.  This needs to be
+					created as a label in the gmnotify_source address.  Add a filter
+					to store all incoming emails from gmnotify_dest in this folder. 
+
+After modifying those variables appropriately, make sure you have the correct packages installed:
+
+perl -MCPAN -e 'install Email::Send::Gmail'
+perl -MCPAN -e 'install Email::Simple::Creator'
+perl -MCPAN -e 'install Net::IMAP::Simple::SSL'
+
+After that, you should be able to load the script in Irssi with:
+
+/script load gmnotify.pl
+
+--------------------------------
+
+KNOWN ISSUES:
+
+- Due to a bug in NET::IMAP::Simple::seen(), the script can sometimes parse emails that have already been read, resulting in old responses being sent again.  Until this is fixed, response emails are deleted after being parsed.
