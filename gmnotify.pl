@@ -1,11 +1,10 @@
-#################################################################
-## A nick hilight/PM notification and response script		##
-##									##
-## Parts of this script are modified from sumeet's goobtown.pl	##
-## and drano's notify.io script.					##
-##									##
-## zorachus, 6/7/10							##
-#################################################################
+
+## A nick hilight/PM notification and response script		
+##								
+## Parts of this script are modified from sumeet's goobtown.pl	
+## and drano's notify.io script.				
+##								
+## zorachus, 6/7/10						
 
 use vars qw($VERSION %IRSSI);
 use Irssi qw(command_bind);
@@ -24,22 +23,21 @@ my %IRSSI =	(
 	license	=> 'GPL'
 );
 
-#############################################################################################
-## Irssi environment variables:									##
-## (change with /set variable_name)								##
-##	gmnotify_poll_rate: 		How often to poll for new emails (IMAP) in seconds.  	##
-##					Default: 300							##
-##	gmnotify_active_poll_rate: 	How often to poll for new emails after an email		##	
-##                                 has been sent or received for the next 			##
-##					gmnotify_poll_rate seconds.  Default: 60			##
-##	gmnotify_source		Gmail address to send from (blank by default!)		##
-##	gmnotify_password		Password for gmnotify_source (blank by default!)		##
-##	gmnotify_dest			Gmail address to send to (blank by default!)		##
-##	gmnotify_folder		The IMAP folder (or Gmail label) to poll for response	##
-##					emails.  Add this folder to the gmnotify_source address ##
-##					and set up filters appropriately.				##
-##					Default: irssi_notifications				##
-#############################################################################################
+## Irssi environment variables:									
+## (change with /set variable_name)								
+##	gmnotify_poll_rate: 		How often to poll for new emails (IMAP) in seconds.  	
+##					Default: 300						
+##	gmnotify_active_poll_rate: 	How often to poll for new emails after an email			
+##                                 has been sent or received for the next 			
+##					gmnotify_poll_rate seconds.  Default: 60		
+##	gmnotify_source		Gmail address to send from (blank by default!)		
+##	gmnotify_password		Password for gmnotify_source (blank by default!)	
+##	gmnotify_dest			Gmail address to send to (blank by default!)		
+##	gmnotify_folder		The IMAP folder (or Gmail label) to poll for response	
+##					emails.  Add this folder to the gmnotify_source address 
+##					and set up filters appropriately.			
+##					Default: irssi_notifications			
+
 
 sub sig_print_text($$$) {
 	my ($destination, $text, $stripped) = @_;
