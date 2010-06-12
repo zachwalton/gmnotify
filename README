@@ -1,7 +1,7 @@
 --------------------------------
 
 GMNotify: A notification script for Irssi.  When away, sends an email on channel highlights/PMs.  Supports responding.
-Version: 1.0
+Version: 1.1
 Author: Zach Walton
 
 Parts of this script are modified from sumeet's goobtown.pl and drano's notify.io script.

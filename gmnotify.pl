@@ -1,10 +1,13 @@
 
 ## A nick hilight/PM notification and response script		
 ##								
+## See http://github.com/zach-walton/gmnotify for example config file
+##
 ## Parts of this script are modified from sumeet's goobtown.pl	
 ## and drano's notify.io script.				
 ##								
 ## zorachus, 6/7/10						
+
 
 use vars qw($VERSION %IRSSI);
 use Irssi qw(command_bind);
@@ -14,7 +17,7 @@ use Email::Simple;
 use Email::Simple::Creator;
 use Net::IMAP::Simple::SSL;
 
-my $VERSION = '1.00';
+my $VERSION = '1.1';
 my %IRSSI =	(
 	authors	=> 'Zach Walton',
 	contact	=> 'zacwalt@gmail.com',
@@ -22,6 +25,7 @@ my %IRSSI =	(
 	description	=> 'A nick hilight/PM notification script.  As far as I know, the only one that supports responding via email.',
 	license	=> 'GPL'
 );
+
 
 ## Irssi environment variables:									
 ## (change with /set variable_name)								
@@ -31,12 +35,12 @@ my %IRSSI =	(
 ##                                 has been sent or received for the next 			
 ##					gmnotify_poll_rate seconds.  Default: 60		
 ##	gmnotify_source		Gmail address to send from (blank by default!)		
-##	gmnotify_password		Password for gmnotify_source (blank by default!)	
-##	gmnotify_dest			Gmail address to send to (blank by default!)		
+##	gmnotify_password		Password for gmnotify_source (blank by default!)
+##	gmnotify_dest			Gmail address to send to (blank by default!)	
 ##	gmnotify_folder		The IMAP folder (or Gmail label) to poll for response	
 ##					emails.  Add this folder to the gmnotify_source address 
 ##					and set up filters appropriately.			
-##					Default: irssi_notifications			
+##					Default: irssi_notifications				
 
 
 sub sig_print_text($$$) {
@@ -167,23 +171,56 @@ sub short_timer($) {
 	$short_timer=Irssi::timeout_add($long_poll_rate*1000,'short_timer', '1');
 }
 
+sub load_conf {
+	my $exists = open(GMCONF, "<gmnotify.conf");
+	if (!$exists) {
+		print "Error opening configuration file!  See example configuration at http://github.com/zach-walton/gmnotify.  Exiting.";
+		exit(1);
+	}
+	my $i=0;
+	while ($line = <GMCONF>) {
+		$i++;
+		if (($line !~ /^#/) and ($line !~ /^\n/)) {
+			chomp($line);
+			$line =~ /(\S+?)\:\s+?(.+)/;
+			my $name = $1; my $value = $2;
+			if ($name eq "SourceEmail") {
+				Irssi::settings_set_str('gmnotify_source', $value);
+			}
+			elsif ($name eq "SourcePassword") { 
+				Irssi::settings_set_str('gmnotify_password', $value); 
+			}
+			elsif ($name eq "DestEmail") { 
+				Irssi::settings_set_str('gmnotify_dest', $value); 
+			}
+			elsif ($name eq "IMAPPollRate")	{ 
+				Irssi::settings_set_int('gmnotify_poll_rate', $value); 
+			}
+			elsif ($name eq "TempIMAPPollRate") { 
+				Irssi::settings_set_int('gmnotify_active_poll_rate', $value); 
+			}
+			else { 
+				die("Error in gmnotify.conf at line $i!  See example conf file at http://github.com/zach-walton/gmnotify");
+			}
+		}
+	}
+}
+
 Irssi::signal_add_last('print text', \&sig_print_text);
 Irssi::signal_add_last('message private', \&sig_message_private);
 
-Irssi::settings_add_int('misc', 'gmnotify_poll_rate', 300);
-Irssi::settings_add_int('misc', 'gmnotify_active_poll_rate', 60); #setting this lower than 60 may cause freezing/crashing!
+Irssi::settings_add_int('misc', 'gmnotify_poll_rate', 0);
+Irssi::settings_add_int('misc', 'gmnotify_active_poll_rate', 0); #setting this lower than 60 may cause freezing/crashing!
 Irssi::settings_add_str('misc', 'gmnotify_source', '');
 Irssi::settings_add_str('misc', 'gmnotify_password', '');
 Irssi::settings_add_str('misc', 'gmnotify_dest', '');
-Irssi::settings_add_str('misc', 'gmnotify_folder', 'irssi_notifications');
+Irssi::settings_add_str('misc', 'gmnotify_folder', '');
 
 our $timer_name=undef;
 our $short_timer=undef;
 our $long_poll_rate=Irssi::settings_get_int('gmnotify_poll_rate');
 
-if (Irssi::settings_get_str('gmnotify_source') eq '') { die "No source email set!"; return; }
-if (Irssi::settings_get_str('gmnotify_password') eq '') { die "No source password set!"; return; }
-if (Irssi::settings_get_str('gmnotify_dest') eq '') { die "No destination email set!"; return; }
-print "See script for environment variables and details.";
+load_conf();
+
 poll($folder);
 
