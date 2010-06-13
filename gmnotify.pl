@@ -48,8 +48,8 @@ sub sig_print_text($$$) {
 	my $server = $destination->{server};
         my ($hilight) = Irssi::parse_special('$;');
 	return unless $server->{usermode_away} eq 1;
-	$text =~ s/(.*)$hilight(.*)($server->{nick})(.*)/$3$4/;
 	if ($destination->{level} & MSGLEVEL_HILIGHT) {
+		$text =~ s/(.*)$hilight(.*)($server->{nick})(.*)/$3$4/;
 		send_message(
 			"Nick Highlight in ".$destination->{target},
 			$stripped,
