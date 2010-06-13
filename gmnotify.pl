@@ -62,7 +62,6 @@ sub sig_print_text($$$) {
 }
 
 sub sig_message_private($$$$) {
-	return unless (Irssi::settings_get_int('screen_away_status') eq 0);
 	my ($server, $data, $nick, $address) = @_;
 	return unless $server->{usermode_away} eq 1;
 	send_message(
