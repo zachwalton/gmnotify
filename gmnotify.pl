@@ -199,6 +199,9 @@ sub load_conf {
 			elsif ($name eq "TempIMAPPollRate") { 
 				Irssi::settings_set_int('gmnotify_active_poll_rate', $value); 
 			}
+			elsif ($name eq "IMAPFolder") {
+				Irssi::settings_set_str('gmnotify_folder', $value);
+			}
 			else { 
 				die("Error in gmnotify.conf at line $i!  See example conf file at http://github.com/zach-walton/gmnotify");
 			}
