@@ -154,10 +154,13 @@ sub short_timer($) {
 		Irssi::settings_set_int('gmnotify_poll_rate', $long_poll_rate);
 		if (defined($short_timer)) {
 			Irssi::timeout_remove($short_timer);
+			$short_timer = undef;
 		}
 		return;
 	}
-	$long_poll_rate=Irssi::settings_get_int('gmnotify_poll_rate');
+	if (!defined($short_timer)) {
+		$long_poll_rate=Irssi::settings_get_int('gmnotify_poll_rate');
+	}
 	Irssi::settings_set_int('gmnotify_poll_rate',Irssi::settings_get_int('gmnotify_active_poll_rate'));
 	if (defined($timer_name)) {
 		Irssi::timeout_remove($timer_name);
