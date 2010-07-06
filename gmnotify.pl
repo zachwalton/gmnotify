@@ -175,8 +175,7 @@ sub short_timer($) {
 sub load_conf {
 	my $exists = open(GMCONF, "<gmnotify.conf");
 	if (!$exists) {
-		print "Error opening configuration file!  See example configuration at http://github.com/zach-walton/gmnotify.  Exiting.";
-		exit(1);
+		die ("Error opening configuration file!  See example configuration at http://github.com/zach-walton/gmnotify.  Exiting.");
 	}
 	my $i=0;
 	while ($line = <GMCONF>) {
