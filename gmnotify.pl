@@ -117,13 +117,13 @@ sub post_response($) {
 	if ($channel eq "Private") {
 		my $irssi_server = Irssi::server_find_tag($server);
 		if (!defined($irssi_server)) { return; }
-		$irssi_server->send_message($user, "$message [from email]", 1);
+		$irssi_server->command("msg $user $message [from email]");
 		Irssi::print("Private message sent to \%W$user\%n on \%W$server\%n: $message [from email]", MSGLEVEL_CLIENTNOTICES);
 	}
 	else {
 		my $irssi_server = Irssi::server_find_tag($server);
 		if (!defined($irssi_server)) { return; }
-		$irssi_server->send_message($channel, "$user: $message [from email]", 0);
+		$irssi_server->command("msg $channel $user: $message [from email]");
 		Irssi::print("Message sent to \%W$channel\%n on \%W$server\%n: $user: $message [from email]", MSGLEVEL_CLIENTNOTICES);
 	}
 	return;
