@@ -97,7 +97,7 @@ sub send_message($$$) {
 sub poll {
 	my $imap = Net::IMAP::Simple::SSL->new('imap.gmail.com');
 	$imap->login(Irssi::settings_get_str('gmnotify_source'), Irssi::settings_get_str('gmnotify_password')) or return; #sometimes, polling too often causes this to fail.  die() would kill the script too often
-	$number_of_messages = $imap->select(Irssi::settings_get_str('gmnotify_folder'));
+	$number_of_messages = $imap->select(Irssi::settings_get_str('gmnotify_folder')) or die("IMAP folder \"".Irssi::settings_get_str('gmnotify_folder')."\" does not exist.");
 	foreach $msg (1..$number_of_messages) {	
 		if (!defined($imap->seen($msg))) {
 			short_timer(0);
