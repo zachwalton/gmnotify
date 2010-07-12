@@ -212,12 +212,12 @@ sub load_conf {
 Irssi::signal_add_last('print text', \&sig_print_text);
 Irssi::signal_add_last('message private', \&sig_message_private);
 
-Irssi::settings_add_int('misc', 'gmnotify_poll_rate', 0);
-Irssi::settings_add_int('misc', 'gmnotify_active_poll_rate', 0); #setting this lower than 60 may cause freezing/crashing!
-Irssi::settings_add_str('misc', 'gmnotify_source', '');
-Irssi::settings_add_str('misc', 'gmnotify_password', '');
-Irssi::settings_add_str('misc', 'gmnotify_dest', '');
-Irssi::settings_add_str('misc', 'gmnotify_folder', '');
+Irssi::settings_add_int('GMNotify', 'gmnotify_poll_rate', 0);
+Irssi::settings_add_int('GMNotify', 'gmnotify_active_poll_rate', 0); #setting this lower than 60 may cause freezing/crashing!
+Irssi::settings_add_str('GMNotify', 'gmnotify_source', '');
+Irssi::settings_add_str('GMNotify', 'gmnotify_password', '');
+Irssi::settings_add_str('GMNotify', 'gmnotify_dest', '');
+Irssi::settings_add_str('GMNotify', 'gmnotify_folder', '');
 
 our $timer_name=undef;
 our $short_timer=undef;
