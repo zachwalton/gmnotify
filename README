@@ -48,3 +48,4 @@ After that, you should be able to load the script in Irssi with:
 KNOWN ISSUES:
 
 - Due to a bug in NET::IMAP::Simple::seen(), the script can sometimes parse emails that have already been read, resulting in old responses being sent again.  Until this is fixed, response emails are deleted after being parsed.
+- After a long period of stable use, GMNotify started crashing when sending notification emails.  Since it was using Google's SMTP servers, my best guess is that Google starting blocking the IP for polling too often.  See issues list on github.
