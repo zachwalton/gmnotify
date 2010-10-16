@@ -1,0 +1,47 @@
+<html>
+	<head>
+		<title>Bitssi- An Auto-URL Shortener/Expander for Irssi</title>
+	</head>
+	<body>
+		<div style='text-align: center; margin-left: auto; margin-right: auto; font-size: 28px; font-weight: bold;'>Bitssi - An Auto-URL Shortener for Irssi</div><br /><br />
+		<a href='svn/bitssi'>Download</a><br /><br />
+		<b>Modes:</b><br /><br />
+		<ul>
+			<li>Shorten (default)
+				<ul><li>The "Shorten" mode automatically shortens any URLs posted in chat or private message.</li></ul>
+			</li>
+			<li>Expand
+				<ul><li>The "Expand" mode automatically expands any URLs posted in chat.  That is, it takes a bit.ly link and reverts it to its original state.</li></ul>
+			</li>
+			<li>Manual
+				<ul><li>The "Manual" mode only shortens or expands links if manually specified.  This can be done by putting an "s" or "e" before "http", respectively.</li></ul>
+			</li>
+			<li>Nothing
+				<ul><li>The "Nothing" mode will not expand or shorten links, even if manually specified.  It will still shorten or expand links via the /shorten and /expand commands, described below.</li></ul>
+			</li>
+		</ul>
+		<br /></br />
+		<b>Commands:</b><br /><br />
+		<ul>
+			<li>/set_bitssi_login $login_name <font color='red'>Blank by default!</font>
+				<ul><li>Sets the bitssi_login environment variable.  Necessary for the script to function.  See <a href='http://bit.ly/account/your_api_key'>here</a> to obtain a bit.ly API login.</li></ul>
+			</li>
+			<li>/set_api_key $api_key <font color='red'>Blank by default!</font>
+
+				<ul><li>Sets the bitssi_api_key environment variable.  Necessary for the script to function.  See <a href='http://bit.ly/account/your_api_key'>here</a> to obtain a bit.ly API key.</li></ul>
+			</li>
+			<li>/expand $x
+				<ul><li>Expands the bit.ly link specified in $x.  Works in all modes.</li></ul>
+			</li>
+			<li>/shorten $x
+				<ul><li>Shortens the link specified in $x to a bit.ly link.  Works in all modes.</li></ul>
+			</li>
+			<li>/bitssi_mode [shorten|expand|manual|nothing]
+				<ul><li>Sets the Bitssi mode.  Modes are described in the "Modes" section.</li></ul>
+			</li>
+			<li>/bitssi_help
+				<ul><li>Displays a list of the above commands.</li></ul>
+			</li>
+		</ul>
+	</body>
+</html>
